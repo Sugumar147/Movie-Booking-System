@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
         // Add exception class name
         modelAndView.addObject("exceptionName", ex.getClass().getName());
-        
+
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         ex.printStackTrace(pw);

@@ -45,7 +45,7 @@ public class MyController {
     public ModelAndView login(String username,String password,  RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView();
         if(userService.verifyLogin(username,password)) {
-            mv.setViewName("bookingsuccess");
+            mv.setViewName("payment");
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid username or password.");
             mv.setViewName("redirect:/confirmbooking");
@@ -67,6 +67,12 @@ public class MyController {
     @GetMapping("signup")
     public ModelAndView signup() {
         ModelAndView mv = new ModelAndView("signup");
+        return mv;
+    }
+
+    @GetMapping("/payment")
+    public ModelAndView payment() {
+        ModelAndView mv = new ModelAndView("payment");
         return mv;
     }
 

@@ -44,7 +44,7 @@
 <body>
 
 
-<form action="/registersuccess" method="POST">
+<form action="/payment" method="POST">
     Username: <input type="text" name="userName"><br>
     Password: <input type="password" name="password"><br>
     <input type="submit" value="Register">
