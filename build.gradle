@@ -21,6 +21,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper
     // https://mvnrepository.com/artifact/javax/javaee-web-api
+    // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
+    // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+
+// https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation 'org.postgresql:postgresql:42.7.2'
+
     compileOnly 'javax:javaee-web-api:7.0'
 //    implementation 'javax.servlet:jstl:1.2' // or another version
 
@@ -39,7 +48,6 @@ dependencies {
 //    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
-
 
 
 }

@@ -65,22 +65,11 @@
 <body>
     <div class="container">
         <h2>Payment Details</h2>
-        <form class="payment-form" action="/bookingsuccess" method="post">
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter your card number" required>
-            </div>
-            <div class="form-group">
-                <label for="expiryDate">Expiry Date</label>
-                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YYYY" required>
-            </div>
-            <div class="form-group">
-                <label for="cvv">CVV</label>
-                <input type="number" id="cvv" name="cvv" placeholder="Enter CVV" required>
-            </div>
+        <form class="payment-form" action="processing.html">
+
             <div class="form-group">
                 <label for="amount">Amount</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                <input type="text" id="amount" name="amount" placeholder="Enter amount" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Make Payment">

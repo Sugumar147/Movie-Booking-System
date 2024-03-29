@@ -28,11 +28,17 @@
             text-align: center;
         }
         .seats {
-             margin-top: 20px;
-             display: grid;
-             grid-template-columns: repeat(5, 1fr); /* Adjust to 5 seats per row */
-             gap: 10px;
-             justify-content: center; /* Center the seats horizontally */
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Adjust to 5 seats per row */
+            gap: 10px;
+            justify-content: center; /* Center the seats horizontally */
+        }
+        .screen {
+            background-color: blue;
+            color: white;
+            text-align: center;
+            padding: 10px;
         }
         /* Add more styles as needed */
     </style>
@@ -41,6 +47,7 @@
     <div class="container">
         <h1>Seat Selection</h1>
         <h2>Selected Theatre: ${selectedTheatre}</h2>
+        <div class="screen"></div>
         <form action="confirmbooking" method="post">
             <div class="seats" align="center">
                 <c:forEach var="seat" items="${seatList}">
@@ -49,8 +56,8 @@
                         ${seat.seatNumber} <!-- You can add more details if needed -->
                     </label>
                 </c:forEach>
-            </br></br>
             </div>
+            <br><br>
             <div align="center">
               <button type="submit" >Book Selected Seats</button>
             </div>

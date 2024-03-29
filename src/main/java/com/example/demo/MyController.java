@@ -1,10 +1,13 @@
 package com.example.demo;
 
+import com.example.demo.mapper.UsersMapper;
+import com.example.demo.model.User;
 import com.example.demo.Services.MovieService;
 import com.example.demo.Services.TheatreService;
 import com.example.demo.Services.UserService;
+import org.apache.ibatis.type.MappedTypes;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,14 +18,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+@MappedTypes(User.class)
+@MapperScan("com.example.demo.mapper")
 @Controller
 public class MyController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    MovieService movieService;
+    private UsersMapper usersMapper;
     @Autowired
-    TheatreService theatreService;
+    private MovieService movieService;
+    @Autowired
+    private TheatreService theatreService;
     @GetMapping("/theatrelist")
     public ModelAndView theatrelist() {
         ModelAndView mv = new ModelAndView();
@@ -38,7 +45,6 @@ public class MyController {
         ModelAndView mv = new ModelAndView("booking");
         mv.addObject("seatList", seatList);
         mv.addObject("selectedTheatre", selectedTheatre);
-
         return mv;
     }
     @PostMapping("/login")
@@ -53,6 +59,12 @@ public class MyController {
         return mv;
     }
 
+    @RequestMapping("/bookingsuccess")
+    public ModelAndView bookingSuccess()  throws InterruptedException{
+        ModelAndView mv = new ModelAndView("bookingsuccess");
+//        Thread.sleep(3000);
+        return mv;
+    }
     @RequestMapping("/confirmbooking")
     public ModelAndView confirmBooking() {
         ModelAndView mv = new ModelAndView("confirmbooking");
@@ -70,7 +82,7 @@ public class MyController {
         return mv;
     }
 
-    @GetMapping("/payment")
+    @PostMapping("/payment")
     public ModelAndView payment() {
         ModelAndView mv = new ModelAndView("payment");
         return mv;

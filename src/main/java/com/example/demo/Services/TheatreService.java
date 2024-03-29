@@ -13,8 +13,7 @@ import java.util.Map;
 
 @Service
 public class TheatreService {
-    @Autowired
-    Seat seat;
+
     // Assuming you have a map to store Theatre objects by their IDs
     private static final Map<String, Theatre> theatreMap = new HashMap<>();
 
