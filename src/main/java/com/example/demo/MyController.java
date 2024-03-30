@@ -47,7 +47,7 @@ public class MyController {
         mv.addObject("selectedTheatre", selectedTheatre);
         return mv;
     }
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public ModelAndView login(String username,String password,  RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView();
         if(userService.verifyLogin(username,password)) {

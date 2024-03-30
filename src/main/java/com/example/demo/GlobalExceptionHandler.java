@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleException(Exception ex) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("error"); // Set view name for the error page
-
+        modelAndView.addObject("ex", ex);
         // Add error message
         modelAndView.addObject("errorMessage", ex.getMessage());
 
