@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <%@ page import="com.example.demo.Services.MovieService" %>
-<%@ page import="com.example.demo.Theatre" %>
+<%@ page import="com.example.demo.Services.TheatreService" %>
+<%@ page import="com.example.demo.model.Theatre" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,6 +74,12 @@
             <%
                 // Retrieve theatre list for the selected movie
                 List<Theatre> theatreList = new MovieService().getTheatreList(selectedMovie);
+                // Fetch theatre details and seats available in bulk
+                Map<String, Theatre> theatreMap = new HashMap<>();
+                for (Theatre theatre : theatreList) {
+                    theatreMap.put(theatre.getName(), theatre);
+                }
+                new TheatreService().addSeatsForTheatre(theatreMap.values());
                 // Iterate over theatre list
                 for (Theatre theatre : theatreList) {
             %>
@@ -81,6 +89,8 @@
                         <p align="center"><%= theatre.getName() %></p>
                         <div class="theatre-details">
                             <p align="center">Seat Capacity: <%= theatre.getSeatCapacity() %></p>
+                            </br>
+                            <p align="center">Seats Available: <%= (theatre.GetSeatList()).size() %></p>
                         </div>
                     </div>
                 </a>

@@ -2,12 +2,10 @@ package com.example.demo.Services;
 
 
 import com.example.demo.DemoApplication;
-import com.example.demo.TheatreConfiguration;
-import com.example.demo.Movie;
-import com.example.demo.Theatre;
+import com.example.demo.config.TheatreConfiguration;
+import com.example.demo.model.Movie;
+import com.example.demo.model.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

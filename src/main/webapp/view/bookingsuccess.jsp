@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,6 +71,16 @@
         <div class="logged-in-message">
             <p>Your booking has been confirmed.</p>
             <p>Thank you for booking with us!</p>
+            <p>Booking ID: ${ticket.bookingId}</p>
+            <p>Movie: ${ticket.movie}</p>
+            <p>Theatre: ${ticket.theatre}</p>
+            <p>Seats:</p>
+            <ul>
+                <c:forEach var="seat" items="${ticket.seatList}">
+                    <li>${seat.seatNumber}</li>
+                </c:forEach>
+            </ul>
+            <p>Amount: ${ticket.amount}</p>
         </div>
 
     </div>

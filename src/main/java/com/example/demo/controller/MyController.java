@@ -1,6 +1,10 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.Services.TicketService;
 import com.example.demo.mapper.UsersMapper;
+import com.example.demo.model.Seat;
+import com.example.demo.model.Theatre;
+import com.example.demo.model.Ticket;
 import com.example.demo.model.User;
 import com.example.demo.Services.MovieService;
 import com.example.demo.Services.TheatreService;
@@ -10,7 +14,6 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.type.MappedTypes;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jms.JmsProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,18 +33,20 @@ public class MyController {
     private MovieService movieService;
     @Autowired
     private TheatreService theatreService;
+    @Autowired
+    private TicketService ticketService;
     @GetMapping("/theatrelist")
-    public ModelAndView theatrelist() {
+    public ModelAndView theatrelist(String movie  , HttpSession session) {
         ModelAndView mv = new ModelAndView();
+        session.setAttribute("movieName" , movie);
         mv.setViewName("theatrelist");
         return mv;
     }
     @GetMapping("/booking")
     public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre , HttpSession session) {
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
-        theatreService.addSeatsForTheatre(theatre);
+//        theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
-        // Add theatre list and selected theatre to the model
         ModelAndView mv = new ModelAndView("booking");
         mv.addObject("seatList", seatList);
         mv.addObject("selectedTheatre", selectedTheatre);
@@ -63,7 +68,8 @@ public class MyController {
     @RequestMapping("/bookingsuccess")
     public ModelAndView bookingSuccess()  throws InterruptedException{
         ModelAndView mv = new ModelAndView("bookingsuccess");
-//        Thread.sleep(3000);
+        Ticket ticket = ticketService.generateTicket();
+        mv.addObject("ticket",ticket);
         return mv;
     }
     @RequestMapping("/confirmbooking")
@@ -75,7 +81,6 @@ public class MyController {
         }
         else {
             int totalSeats = selectedSeats.size();
-            session.removeAttribute("selectedTheatre");
             mv.setViewName("confirmbooking");
             mv.addObject("totalSeats", totalSeats);
             session.setAttribute("totalSeats",totalSeats);

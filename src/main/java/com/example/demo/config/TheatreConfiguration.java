@@ -1,14 +1,11 @@
-package com.example.demo;
+package com.example.demo.config;
 
 import com.example.demo.Services.TheatreService;
-import com.example.demo.Theatre;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.Theatre;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

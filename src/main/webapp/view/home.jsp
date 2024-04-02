@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.demo.Movie" %>
+<%@ page import="com.example.demo.model.Movie" %>
 <%@ page import="com.example.demo.Services.MovieService" %>
 <!DOCTYPE html>
 <html>
