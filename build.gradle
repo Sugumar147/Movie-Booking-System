@@ -25,10 +25,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
     // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-// https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
-    implementation 'org.springframework.security:spring-security-config:6.2.1'
-
 
 
 // https://mvnrepository.com/artifact/org.postgresql/postgresql

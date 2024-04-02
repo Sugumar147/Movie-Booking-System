@@ -5,14 +5,14 @@ import com.example.demo.model.User;
 import com.example.demo.Services.MovieService;
 import com.example.demo.Services.TheatreService;
 import com.example.demo.Services.UserService;
+import io.micrometer.common.lang.Nullable;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.type.MappedTypes;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jms.JmsProperties;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,7 +37,7 @@ public class MyController {
         return mv;
     }
     @GetMapping("/booking")
-    public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre) {
+    public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre , HttpSession session) {
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
         theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
@@ -45,6 +45,7 @@ public class MyController {
         ModelAndView mv = new ModelAndView("booking");
         mv.addObject("seatList", seatList);
         mv.addObject("selectedTheatre", selectedTheatre);
+        session.setAttribute("selectedTheatre", selectedTheatre);
         return mv;
     }
     @RequestMapping("/login")
@@ -66,8 +67,21 @@ public class MyController {
         return mv;
     }
     @RequestMapping("/confirmbooking")
-    public ModelAndView confirmBooking() {
-        ModelAndView mv = new ModelAndView("confirmbooking");
+    public ModelAndView confirmBooking(@Nullable @RequestParam("selectedSeats") List<String> selectedSeats,HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        String selectedTheatre = (String) session.getAttribute("selectedTheatre");
+        if(selectedSeats==null) {
+            mv.setViewName("redirect:/booking?theatreName=" + selectedTheatre);
+        }
+        else {
+            int totalSeats = selectedSeats.size();
+            session.removeAttribute("selectedTheatre");
+            mv.setViewName("confirmbooking");
+            mv.addObject("totalSeats", totalSeats);
+            session.setAttribute("totalSeats",totalSeats);
+            mv.addObject("selectedSeats", selectedSeats);
+            session.setAttribute("selectedSeats",selectedSeats);
+        }
         return mv;
     }
 
@@ -83,8 +97,9 @@ public class MyController {
     }
 
     @PostMapping("/payment")
-    public ModelAndView payment() {
+    public ModelAndView payment(String userName, String password) {
         ModelAndView mv = new ModelAndView("payment");
+        userService.insertUser(new User(userName,password));
         return mv;
     }
 

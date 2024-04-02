@@ -11,10 +11,10 @@ import java.util.List;
 public interface UsersMapper {
     @Select("select * from users")
     List<User> getAllUser();
-    @Select("SELECT * FROM users WHERE username = #{username}")
-    User findByUsername(String username);
+    @Select("SELECT * FROM users WHERE username = #{username} and password=#{password}")
+    User isLoggedUser(String username,String password);
 
-    @Insert("INSERT INTO users (username, password) VALUES (#{username}, #{password}")
+    @Insert("INSERT INTO users (username, password) VALUES (#{username}, #{password})")
     void insert(User user);
 
 }

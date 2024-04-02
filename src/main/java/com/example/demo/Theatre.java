@@ -15,13 +15,15 @@ public class Theatre {
     public Theatre() {
 
     }
+
     public Theatre(int id, String name, String seatCapacity, List<String> moviesList) {
         this.id = id;
         this.name = name;
         this.seatCapacity = seatCapacity;
         MoviesList = moviesList;
     }
-    public Theatre(int id, String name, String seatCapacity, List<String> moviesList,List<Seat> seatList) {
+
+    public Theatre(int id, String name, String seatCapacity, List<String> moviesList, List<Seat> seatList) {
         this.id = id;
         this.name = name;
         this.seatCapacity = seatCapacity;
@@ -56,6 +58,7 @@ public class Theatre {
     public List<Seat> GetSeatList() {
         return seatList;
     }
+
     public void setSeatList(List<Seat> seatList) {
         this.seatList = seatList;
     }

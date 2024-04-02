@@ -60,21 +60,31 @@
         .form-group input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .booking-details {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Payment Details</h2>
+        <%-- Display booking details --%>
+         <div class="booking-details">
+              <p>Selected Seats:<%= session.getAttribute("selectedSeats")%></p>
+              <p>Number of Seats:<%= session.getAttribute("totalSeats")%></p>
+              <p>Total Amount: ${totalSeats} x 200 = ${totalSeats * 200}</p>
+        </div>
         <form class="payment-form" action="processing.html">
 
+
             <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" placeholder="Enter amount" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Make Payment">
+                <input type="submit" value="Pay  ₹${totalSeats * 200}">
             </div>
         </form>
+
+
     </div>
 </body>
 </html>
