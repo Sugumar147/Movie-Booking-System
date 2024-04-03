@@ -43,7 +43,7 @@ public class MyController {
         return mv;
     }
     @GetMapping("/booking")
-    public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre , HttpSession session) {
+    public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre ,String timing,  HttpSession session) {
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
 //        theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
@@ -66,10 +66,11 @@ public class MyController {
     }
 
     @RequestMapping("/bookingsuccess")
-    public ModelAndView bookingSuccess()  throws InterruptedException{
+    public ModelAndView bookingSuccess(HttpSession session)  throws InterruptedException{
         ModelAndView mv = new ModelAndView("bookingsuccess");
         Ticket ticket = ticketService.generateTicket();
         mv.addObject("ticket",ticket);
+        session.setAttribute("ticket",ticket);
         return mv;
     }
     @RequestMapping("/confirmbooking")

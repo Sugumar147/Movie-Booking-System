@@ -5,9 +5,11 @@ import com.example.demo.DemoApplication;
 import com.example.demo.config.TheatreConfiguration;
 import com.example.demo.model.Movie;
 import com.example.demo.model.Theatre;
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,30 @@ public class MovieService {
         list.add(new Movie(3, "Fight Club","https://shorturl.at/vALQW"));
         list.add(new Movie(4, "Deadpool","https://shorturl.at/BMUW8"));
         return list;
+    }
+
+    public Boolean isAvailableNow(String timing) {
+        LocalTime currentTime = LocalTime.now();
+        String amOrPm = timing.substring(6);
+        int hours,minutes;
+        if(amOrPm.equals("AM")) {
+            hours = Integer.parseInt(timing.substring(0,2));
+        } else {
+            hours = (Integer.parseInt(timing.substring(0,2)))+12;
+        }
+        minutes = Integer.parseInt(timing.substring(3,5));
+        LocalTime targetTime = LocalTime.of(hours, minutes);
+        System.out.println("current " + currentTime + " target " + targetTime);
+        return currentTime.isBefore(targetTime);
+    }
+
+    public Boolean isAvailableNow(List<String> timing) {
+        for (String time : timing) {
+            if (!isAvailableNow(time)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<Theatre> getTheatreList(String movieName) {

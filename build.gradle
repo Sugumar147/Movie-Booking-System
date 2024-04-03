@@ -52,6 +52,8 @@ dependencies {
 
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+
+springBoot {
+    mainClass = 'com.example.demo.DemoApplication' // Specify the main class of your Spring Boot application
 }
+

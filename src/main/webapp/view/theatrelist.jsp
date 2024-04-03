@@ -5,9 +5,10 @@
 <%@ page import="com.example.demo.Services.TheatreService" %>
 <%@ page import="com.example.demo.model.Theatre" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theatre Selection</title>
     <style>
         body {
@@ -18,12 +19,11 @@
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 50px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            margin-top: 50px;
         }
         h1, h2 {
             color: #333;
@@ -41,7 +41,11 @@
             padding: 15px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            cursor: pointer; /* Add cursor pointer to indicate clickable */
+            cursor: pointer;
+            color: #555;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         .theatre:hover {
             transform: translateY(-5px);
@@ -50,13 +54,50 @@
         .theatre p {
             margin: 0;
             font-size: 18px;
-            color: #555;
         }
         .theatre-details {
             margin-top: 10px;
             font-size: 14px;
-            color: #777;
+            color: #799;
         }
+        .movie-timings {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px; /* Larger font size for timings */
+        }
+        .movie-timings li {
+            display: inline-block; /* Display timings horizontally */
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .movie-timings li:hover {
+            background-color: green;
+            color: #333; /* Change color on hover */
+            border-radius: 3px; /* Add border-radius on hover */
+            padding: 5px 10px; /* Adjust padding on hover */
+        }
+/*           .theatre a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }  */
+        .theatre a:hover {
+            text-decoration: none;
+        }
+        .no-result {
+          font-family: Arial, sans-serif;
+          font-size: 18px;
+          color: #555;
+          text-align: center;
+          margin-top: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -64,38 +105,58 @@
         <h1>Available Theatres</h1>
         <h2>Showing Results For:
             <%
-                // Retrieve selected movie from previous page
                 String selectedMovie = request.getParameter("movie");
-                // Display selected movie
                 out.print(selectedMovie);
             %>
         </h2>
         <div class="theatres">
             <%
-                // Retrieve theatre list for the selected movie
                 List<Theatre> theatreList = new MovieService().getTheatreList(selectedMovie);
-                // Fetch theatre details and seats available in bulk
                 Map<String, Theatre> theatreMap = new HashMap<>();
                 for (Theatre theatre : theatreList) {
                     theatreMap.put(theatre.getName(), theatre);
                 }
                 new TheatreService().addSeatsForTheatre(theatreMap.values());
-                // Iterate over theatre list
                 for (Theatre theatre : theatreList) {
+                    List<String> movieTiming = theatre.getMovieTimingsMap().get(selectedMovie);
+                    if(new MovieService().isAvailableNow(movieTiming)) {
             %>
-                <!-- Wrap each theatre with an anchor tag linking to the booking page -->
-                <a href="booking?theatreName=<%= theatre.getName() %>">
-                    <div class="theatre">
-                        <p align="center"><%= theatre.getName() %></p>
-                        <div class="theatre-details">
-                            <p align="center">Seat Capacity: <%= theatre.getSeatCapacity() %></p>
-                            </br>
-                            <p align="center">Seats Available: <%= (theatre.GetSeatList()).size() %></p>
-                        </div>
-                    </div>
-                </a>
+            <div class="theatre">
+                <p><%= theatre.getName() %></p>
+                <div class="theatre-details">
+                    <p>Seat Capacity: <%= theatre.getSeatCapacity() %></p>
+                    <p>Seats Available: <%= theatre.GetSeatList().size() %></p>
+                    <p>Movie Timings:</p>
+                    <ul class="movie-timings">
+                        <%
+                            List<String> movieTimings = theatre.getMovieTimingsMap().get(selectedMovie);
+                            if (movieTimings != null) {
+                                for (String timing : movieTimings) {
+                                    if(new MovieService().isAvailableNow(movieTimings)) {
+                        %>
+                        <li><a href="booking?theatreName=<%= theatre.getName() %>&timing=<%= timing %>"><%= timing %></a></li>
+                        <%
+                                    }
+                                }
+                            }
+                        %>
+                    </ul>
+                </div>
+                <a href="booking?theatreName=<%= theatre.getName() %>"></a>
+            </div>
+            <% }
+                else {
+             %>
+               <div class="theatre">
+                    <p><%= theatre.getName() %></p>
+                      <div class="theatre-details">
+                            <p>No shows available</p>
+                      </div>
+                </div>
+             <% } %>
             <% } %>
         </div>
     </div>
+
 </body>
 </html>

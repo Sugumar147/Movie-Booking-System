@@ -24,6 +24,7 @@ public class TicketService {
         ticket.setTheatre((String) session.getAttribute("selectedTheatre"));
         ticket.setMovie((String) session.getAttribute("movieName"));
         ticket.setSeatList((List<Seat>) session.getAttribute("selectedSeats"));
+        session.setAttribute("seats",(List<Seat>) session.getAttribute("selectedSeats"));
         ticket.setAmount(((Integer) session.getAttribute("totalSeats"))*200);
         String randomString = generateRandomString();
         ticket.setBookingId(randomString);
