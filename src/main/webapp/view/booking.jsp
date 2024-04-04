@@ -52,8 +52,10 @@
             <div class="seats" align="center">
                 <c:forEach var="seat" items="${seatList}">
                     <label>
-                        <input type="checkbox" name="selectedSeats" value="${seat.seatNumber}">
-                        ${seat.seatNumber} <!-- You can add more details if needed -->
+
+                        <c:set var="disabled" value="${occupiedSeats.contains(seat.getSeatNumber()) ? 'disabled' : ''}" /> <!-- Set 'disabled' attribute if the seat is occupied -->
+                        <input type="checkbox" name="selectedSeats" value="${seat.seatNumber}" ${disabled}>
+                        ${seat.getSeatNumber()}
                     </label>
                 </c:forEach>
             </div>

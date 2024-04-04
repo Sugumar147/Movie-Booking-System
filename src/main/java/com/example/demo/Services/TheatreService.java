@@ -2,12 +2,15 @@ package com.example.demo.Services;
 
 import com.example.demo.model.Seat;
 import com.example.demo.model.Theatre;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class TheatreService {
+    @Autowired
+    BookingService bookingService;
     // Assuming you have a map to store Theatre objects by their IDs
     private static final Map<String, Theatre> theatreMap = new HashMap<>();
 
@@ -48,4 +51,16 @@ public class TheatreService {
         }
         return count;
     }
+    public void occupySeats(Theatre theatre, List<String> seatNumbers, String timing) {
+        List<Seat> seatList = theatre.GetSeatList();
+        for (Seat seat : seatList) {
+            if (seatNumbers.contains(seat.getSeatNumber())) {
+                seat.setOccupied(true);
+                // Optionally, you may want to save the updated seat information to the database here
+                bookingService.bookSeats(theatre.getName(), timing, seat.getSeatNumber() );
+                System.out.println(theatre.getName()+"  " + timing +" " + seat.getSeatNumber() );
+            }
+        }
+    }
+
 }

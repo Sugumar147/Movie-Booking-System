@@ -132,7 +132,7 @@
                             List<String> movieTimings = theatre.getMovieTimingsMap().get(selectedMovie);
                             if (movieTimings != null) {
                                 for (String timing : movieTimings) {
-                                    if(new MovieService().isAvailableNow(movieTimings)) {
+                                    if(new MovieService().isAvailableNow(timing)) {
                         %>
                         <li><a href="booking?theatreName=<%= theatre.getName() %>&timing=<%= timing %>"><%= timing %></a></li>
                         <%

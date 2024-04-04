@@ -39,15 +39,18 @@ public class MovieService {
         }
         minutes = Integer.parseInt(timing.substring(3,5));
         LocalTime targetTime = LocalTime.of(hours, minutes);
-        System.out.println("current " + currentTime + " target " + targetTime);
         return currentTime.isBefore(targetTime);
     }
 
     public Boolean isAvailableNow(List<String> timing) {
+        int count=0;
         for (String time : timing) {
             if (!isAvailableNow(time)) {
-                return false;
+                count++;
             }
+        }
+        if(timing.size()==count) {
+            return false;
         }
         return true;
     }

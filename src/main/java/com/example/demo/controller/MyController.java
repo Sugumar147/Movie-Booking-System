@@ -1,14 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.Services.TicketService;
+import com.example.demo.Services.*;
 import com.example.demo.mapper.UsersMapper;
-import com.example.demo.model.Seat;
-import com.example.demo.model.Theatre;
-import com.example.demo.model.Ticket;
-import com.example.demo.model.User;
-import com.example.demo.Services.MovieService;
-import com.example.demo.Services.TheatreService;
-import com.example.demo.Services.UserService;
+import com.example.demo.model.*;
 import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.type.MappedTypes;
@@ -25,6 +19,8 @@ import java.util.List;
 @MapperScan("com.example.demo.mapper")
 @Controller
 public class MyController {
+    @Autowired
+    private BookingService bookingService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -45,10 +41,14 @@ public class MyController {
     @GetMapping("/booking")
     public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre ,String timing,  HttpSession session) {
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
+        List<String> occupiedSeats = bookingService.getOccupiedSeats(selectedTheatre,timing);
+        System.out.println(occupiedSeats);
 //        theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
         ModelAndView mv = new ModelAndView("booking");
         mv.addObject("seatList", seatList);
+        session.setAttribute("theatre",theatre );
+        session.setAttribute("timing",timing);
         mv.addObject("selectedTheatre", selectedTheatre);
         session.setAttribute("selectedTheatre", selectedTheatre);
         return mv;
@@ -71,6 +71,10 @@ public class MyController {
         Ticket ticket = ticketService.generateTicket();
         mv.addObject("ticket",ticket);
         session.setAttribute("ticket",ticket);
+        Theatre theatre = (Theatre) session.getAttribute("theatre");
+        String timing = (String) session.getAttribute("timing");
+        List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
+        theatreService.occupySeats(theatre,selectedSeats,timing);
         return mv;
     }
     @RequestMapping("/confirmbooking")
@@ -82,6 +86,7 @@ public class MyController {
         }
         else {
             int totalSeats = selectedSeats.size();
+            Theatre theatre = (Theatre) session.getAttribute("theatre");
             mv.setViewName("confirmbooking");
             mv.addObject("totalSeats", totalSeats);
             session.setAttribute("totalSeats",totalSeats);
@@ -91,11 +96,11 @@ public class MyController {
         return mv;
     }
 
-    @PostMapping("/registersuccess")
-    public ModelAndView registerSuccess() {
-        ModelAndView mv = new ModelAndView("bookingsuccess");
-        return mv;
-    }
+//    @GetMapping("/registersuccess")
+//    public ModelAndView registerSuccess(HttpSession session) {
+//        ModelAndView mv = new ModelAndView("bookingsuccess");
+//        return mv;
+//    }
     @GetMapping("signup")
     public ModelAndView signup() {
         ModelAndView mv = new ModelAndView("signup");

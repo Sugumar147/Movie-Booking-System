@@ -35,6 +35,7 @@
             width: 150px; /* Adjust width as needed */
             margin-right: 20px; /* Add spacing between movies */
             padding: 10px;
+            margin-top : 15px;
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #fff;
