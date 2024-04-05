@@ -34,18 +34,28 @@ public class MyController {
     @GetMapping("/theatrelist")
     public ModelAndView theatrelist(String movie  , HttpSession session) {
         ModelAndView mv = new ModelAndView();
+        if(movie==null) {
+            mv.setViewName("redirect:/");
+            return mv;
+        }
         session.setAttribute("movieName" , movie);
         mv.setViewName("theatrelist");
         return mv;
     }
     @GetMapping("/booking")
-    public ModelAndView booking(@RequestParam("theatreName") String selectedTheatre ,String timing,  HttpSession session) {
+    public ModelAndView booking(@Nullable @RequestParam("theatreName") String selectedTheatre ,String timing,  HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        if(selectedTheatre==null) {
+            mv.setViewName("redirect:/");
+            return mv;
+        }
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
         List<String> occupiedSeats = bookingService.getOccupiedSeats(selectedTheatre,timing);
         System.out.println(occupiedSeats);
 //        theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
-        ModelAndView mv = new ModelAndView("booking");
+        mv.setViewName("booking");
+        mv.addObject("occupiedSeats",occupiedSeats);
         mv.addObject("seatList", seatList);
         session.setAttribute("theatre",theatre );
         session.setAttribute("timing",timing);
@@ -54,20 +64,31 @@ public class MyController {
         return mv;
     }
     @RequestMapping("/login")
-    public ModelAndView login(String username,String password,  RedirectAttributes redirectAttributes) {
+    public ModelAndView login(String username,String password,  RedirectAttributes redirectAttributes,HttpSession session) {
         ModelAndView mv = new ModelAndView();
         if(userService.verifyLogin(username,password)) {
             mv.setViewName("payment");
+            session.setAttribute("userName",username);
+            session.setAttribute("password",password);
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid username or password.");
-            mv.setViewName("redirect:/confirmbooking");
+            List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
+            String seats = String.join(", ", selectedSeats);
+            mv.setViewName("redirect:/confirmbooking?selectedSeats="+seats);
         }
         return mv;
     }
 
     @RequestMapping("/bookingsuccess")
     public ModelAndView bookingSuccess(HttpSession session)  throws InterruptedException{
-        ModelAndView mv = new ModelAndView("bookingsuccess");
+        ModelAndView mv = new ModelAndView();
+        String userName = (String) session.getAttribute("userName");
+        String password = (String) session.getAttribute("password");
+        if(userName == null && password == null) {
+            mv.setViewName("redirect:/");
+            return mv;
+        }
+        mv.setViewName("bookingsuccess");
         Ticket ticket = ticketService.generateTicket();
         mv.addObject("ticket",ticket);
         session.setAttribute("ticket",ticket);
@@ -80,13 +101,18 @@ public class MyController {
     @RequestMapping("/confirmbooking")
     public ModelAndView confirmBooking(@Nullable @RequestParam("selectedSeats") List<String> selectedSeats,HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        String selectedTheatre = (String) session.getAttribute("selectedTheatre");
+        Theatre theatre = (Theatre) session.getAttribute("theatre");
         if(selectedSeats==null) {
-            mv.setViewName("redirect:/booking?theatreName=" + selectedTheatre);
+            mv.setViewName("redirect:/");
+            return mv;
+        }
+        String selectedTheatre = (String) session.getAttribute("selectedTheatre");
+        String timing = (String) session.getAttribute("timing");
+        if(selectedSeats==null) {
+            mv.setViewName("redirect:/booking?theatreName=" + selectedTheatre  + "&timing=" + timing);
         }
         else {
             int totalSeats = selectedSeats.size();
-            Theatre theatre = (Theatre) session.getAttribute("theatre");
             mv.setViewName("confirmbooking");
             mv.addObject("totalSeats", totalSeats);
             session.setAttribute("totalSeats",totalSeats);
@@ -104,6 +130,18 @@ public class MyController {
     @GetMapping("signup")
     public ModelAndView signup() {
         ModelAndView mv = new ModelAndView("signup");
+        return mv;
+    }
+
+    @GetMapping("logout")
+    public ModelAndView logout(HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        if(session==null) {
+            mv.setViewName("/");
+            return mv;
+        }
+        mv.setViewName("/");
+        session.invalidate();
         return mv;
     }
 
