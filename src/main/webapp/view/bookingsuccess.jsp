@@ -82,10 +82,11 @@
         </style>
 </head>
 <body>
+    <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");%>
     <div class="container">
         <div class="button-container">
             <button onclick="location.href='/'">Home</button>
-            <button onclick="location.href='/logout'">Logout</button>
+            <button onclick="location.href='logout'">Logout</button>
         </div>
         <h1>Booking Confirmation</h1>
 

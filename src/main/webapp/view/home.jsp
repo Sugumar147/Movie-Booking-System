@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.demo.model.Movie" %>
+<%@ page import="com.example.demo.model.User" %>
 <%@ page import="com.example.demo.Services.MovieService" %>
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,13 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         /* Container styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -27,6 +35,7 @@
         /* Movie selection styles */
         .movies {
             display: flex;
+            flex-wrap: wrap;
             overflow-x: auto; /* Enable horizontal scrolling */
             margin-top: 20px;
         }
@@ -35,7 +44,7 @@
             width: 150px; /* Adjust width as needed */
             margin-right: 20px; /* Add spacing between movies */
             padding: 10px;
-            margin-top : 15px;
+            margin-top: 15px;
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #fff;
@@ -48,7 +57,7 @@
         }
 
         .movie:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
             border: 1px solid #000000;
         }
 
@@ -84,10 +93,45 @@
         .movie a:hover {
             color: #007bff;
         }
+
+        .logout-button {
+            position: absolute; /* Added */
+            top: 20px; /* Added */
+            right: 20px; /* Added */
+            padding: 10px 20px;
+            background-color: #0056b3; /* Changed color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #ff0000;
+        }
+        .logout-form {
+            display : flex;
+            justify-content : flex-end;
+            padding : 40px 40px;
+        }
     </style>
 </head>
 <body>
+    <div class="logout-form">
+                <%
+                    String loggedInUser = (String) session.getAttribute("loggedInUser");
+                    if (loggedInUser != null && !loggedInUser.isEmpty()) {
+                %>
+                        <!-- Render logout button -->
+                        <form action="logout">
+                            <input type="submit" class="logout-button" value="Logout">
+                        </form>
+                <% } %>
+    </div>
     <div class="container">
+
         <h1>Welcome to the Ticket Booking System</h1>
         <h2>Select a Movie</h2>
         <div class="movies">

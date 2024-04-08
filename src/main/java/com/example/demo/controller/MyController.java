@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @MappedTypes(User.class)
@@ -68,8 +70,11 @@ public class MyController {
         ModelAndView mv = new ModelAndView();
         if(userService.verifyLogin(username,password)) {
             mv.setViewName("payment");
+            mv.addObject("userName",username);
+            mv.addObject("password",password);
             session.setAttribute("userName",username);
             session.setAttribute("password",password);
+            session.setAttribute("loggedInUser",username);
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid username or password.");
             List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
@@ -96,6 +101,7 @@ public class MyController {
         String timing = (String) session.getAttribute("timing");
         List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
         theatreService.occupySeats(theatre,selectedSeats,timing);
+        session.invalidate();
         return mv;
     }
     @RequestMapping("/confirmbooking")
@@ -113,11 +119,16 @@ public class MyController {
         }
         else {
             int totalSeats = selectedSeats.size();
-            mv.setViewName("confirmbooking");
             mv.addObject("totalSeats", totalSeats);
             session.setAttribute("totalSeats",totalSeats);
             mv.addObject("selectedSeats", selectedSeats);
             session.setAttribute("selectedSeats",selectedSeats);
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null && !loggedInUser.isEmpty()) {
+                mv.setViewName("payment");
+            } else {
+                mv.setViewName("confirmbooking");
+            }
         }
         return mv;
     }
@@ -136,19 +147,23 @@ public class MyController {
     @GetMapping("logout")
     public ModelAndView logout(HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        if(session==null) {
-            mv.setViewName("/");
-            return mv;
+        if(session!=null) {
+            session.removeAttribute("loggedInUser");
+            session.invalidate();
         }
-        mv.setViewName("/");
-        session.invalidate();
+        mv.setViewName("redirect:/");
         return mv;
     }
 
-    @PostMapping("/payment")
-    public ModelAndView payment(String userName, String password) {
+    @RequestMapping("/payment")
+    public ModelAndView payment(String userName, String password,HttpSession session) {
         ModelAndView mv = new ModelAndView("payment");
-        userService.insertUser(new User(userName,password));
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(password);
+        session.setAttribute("userName",userName);
+        session.setAttribute("password",password);
+        userService.insertUser(user);
         return mv;
     }
 

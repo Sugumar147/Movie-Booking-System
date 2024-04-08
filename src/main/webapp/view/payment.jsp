@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Payment Page</title>
     <style>
         body {
@@ -68,6 +71,14 @@
     </style>
 </head>
 <body>
+    <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+    %>
+    <%
+        String loggedInUser = (String) session.getAttribute("loggedInUser");
+        if (loggedInUser == null ) {
+        response.sendRedirect("/");
+    %>
+    <% } %>
     <div class="container">
         <h2>Payment Details</h2>
         <%-- Display booking details --%>
@@ -83,8 +94,6 @@
                 <input type="submit" value="Pay  ₹${totalSeats * 200}">
             </div>
         </form>
-
-
     </div>
 </body>
 </html>

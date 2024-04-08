@@ -44,7 +44,7 @@
         }
         input[type="text"],
         input[type="password"],
-        button {
+        .b {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -53,18 +53,44 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-        button {
+        .b {
             background-color: #007bff;
             color: #fff;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        button:hover {
+        .b:hover {
             background-color: #0056b3;
+        }
+        .logout-button {
+            position: absolute; /* Added */
+            top: 20px; /* Added */
+            right: 20px; /* Added */
+            padding: 10px 20px;
+            background-color: #0056b3; /* Changed color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+            background-color: #ff0000; /* Changed color */
         }
     </style>
 </head>
 <body>
+    <div class="logout-form">
+        <%
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null && !loggedInUser.isEmpty()) {
+        %>
+            <form action="logout">
+                <input type="submit" class="logout-button" value="Logout">
+            </form>
+        <% } %>
+    </div>
     <div class="container">
         <h1>Booking Confirmation</h1>
 
@@ -87,21 +113,17 @@
                 <div class="logged-out-message">
                     <p>You need to be logged in to confirm your booking.</p>
                     <p>Please enter your credentials:</p>
-                    <spring:hasBindErrors name="error">
-                        <div class="alert alert-danger">
-                            ${error}
-                        </div>
-                    </spring:hasBindErrors>
                     <form class="login-form" action="/login" method="POST">
                         <input type="text" name="username" placeholder="Username" required><br>
                         <input type="password" name="password" placeholder="Password" required><br>
-                        <button type="submit">Login</button>
+                        <button class="b" type="submit">Login</button>
                     </form>
                     <p>Don't have an account? <a href="signup">Register</a></p>
                 </div>
         <%
             }
         %>
+        <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
     </div>
 </body>
 </html>

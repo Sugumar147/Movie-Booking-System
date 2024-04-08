@@ -73,9 +73,40 @@
             display: block; /* Remove any default image spacing */
             margin: 0 auto; /* Center horizontally */
         }
+        .logout-button {
+            position: absolute; /* Added */
+            top: 20px; /* Added */
+            right: 20px; /* Added */
+            padding: 10px 20px;
+            background-color: #0056b3; /* Changed color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+            background-color: #ff0000;
+        }
+        .logout-form {
+            display : flex;
+            justify-content : flex-end;
+            padding : 20px 40px;
+        }
     </style>
 </head>
 <body>
+    <div class="logout-form">
+        <%
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null && !loggedInUser.isEmpty()) {
+        %>
+            <form action="logout">
+                <input type="submit" class="logout-button" value="Logout">
+            </form>
+        <% } %>
+    </div>
     <div class="container">
         <h1>Seat Selection</h1>
         <h2>Selected Theatre: ${selectedTheatre}</h2>
@@ -90,7 +121,7 @@
                         <input type="checkbox" id="${seat.seatNumber}" name="selectedSeats" value="${seat.seatNumber}" ${occupiedSeats.contains(seat.getSeatNumber()) ? 'disabled' : ''}>
                         <label for="${seat.seatNumber}">${seat.seatNumber}</label>
                     </div>
-                    <c:if test="${status.index % 5 == 4}"></div><div class="seats"></c:if> <!-- Close and reopen .seats div every 5 seats -->
+                    <c:if test="${status.index % 7 == 4}"></div><div class="seats"></c:if> <!-- Close and reopen .seats div every 5 seats -->
                 </c:forEach>
             </div>
             <br><br>

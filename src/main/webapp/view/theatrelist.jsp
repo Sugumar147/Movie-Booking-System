@@ -97,10 +97,40 @@
           text-align: center;
           margin-top: 50px;
         }
-
+        .logout-button {
+            position: absolute; /* Added */
+            top: 20px; /* Added */
+            right: 20px; /* Added */
+            padding: 10px 20px;
+            background-color: #0056b3; /* Changed color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+            background-color: #ff0000;
+        }
+        .logout-form {
+            display : flex;
+            justify-content : flex-end;
+            padding : 40px 40px;
+        }
     </style>
 </head>
 <body>
+    <div class="logout-form">
+        <%
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null && !loggedInUser.isEmpty()) {
+        %>
+            <form action="logout">
+                <input type="submit" class="logout-button" value="Logout">
+            </form>
+        <% } %>
+    </div>
     <div class="container">
         <h1>Available Theatres</h1>
         <h2>Showing Results For:
