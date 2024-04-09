@@ -69,29 +69,34 @@
             color: #333;
         }
     </style>
+    <script>
+        // Disable caching to prevent showing the page when clicking back button
+        window.onload = function() {
+            window.history.pushState({}, '', '/');
+            window.onpopstate = function(event) {
+                window.history.pushState({}, '', '/');
+            };
+        };
+    </script>
 </head>
 <body>
-    <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+    <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate"); %>
+    <% String loggedInUser = (String) session.getAttribute("loggedInUser");
+       if (loggedInUser == null ) {
+           response.sendRedirect("/");
+       }
     %>
-    <%
-        String loggedInUser = (String) session.getAttribute("loggedInUser");
-        if (loggedInUser == null ) {
-        response.sendRedirect("/");
-    %>
-    <% } %>
     <div class="container">
         <h2>Payment Details</h2>
-        <%-- Display booking details --%>
-         <div class="booking-details">
-              <p>Selected Seats:<%= session.getAttribute("selectedSeats")%></p>
-              <p>Number of Seats:<%= session.getAttribute("totalSeats")%></p>
-              <p>Total Amount: ${totalSeats} x 200 = ${totalSeats * 200}</p>
+        <div class="booking-details">
+            <!-- No changes in the booking details -->
+            <p>Selected Seats: <%= session.getAttribute("selectedSeats") %></p>
+            <p>Number of Seats: <%= session.getAttribute("totalSeats") %></p>
+            <p>Total Amount: ₹${totalSeats * 200}</p>
         </div>
-        <form class="payment-form" action="processing.html">
-
-
+        <form class="otp-form" action="otpConfirmation" method="post">
             <div class="form-group">
-                <input type="submit" value="Pay  ₹${totalSeats * 200}">
+                <input type="submit" value="Send OTP">
             </div>
         </form>
     </div>

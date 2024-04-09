@@ -122,7 +122,7 @@
     <div class="logout-form">
                 <%
                     String loggedInUser = (String) session.getAttribute("loggedInUser");
-                    if (loggedInUser != null && !loggedInUser.isEmpty()) {
+                    if (loggedInUser != null) {
                 %>
                         <!-- Render logout button -->
                         <form action="logout">

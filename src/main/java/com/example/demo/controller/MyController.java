@@ -5,10 +5,12 @@ import com.example.demo.mapper.UsersMapper;
 import com.example.demo.model.*;
 import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.apache.ibatis.type.MappedTypes;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -101,7 +103,6 @@ public class MyController {
         String timing = (String) session.getAttribute("timing");
         List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
         theatreService.occupySeats(theatre,selectedSeats,timing);
-        session.invalidate();
         return mv;
     }
     @RequestMapping("/confirmbooking")
@@ -155,15 +156,26 @@ public class MyController {
         return mv;
     }
 
+    @PostMapping("/otpConfirmation")
+    public ModelAndView otp() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("otpConfirmation");
+        return mv;
+    }
+
     @RequestMapping("/payment")
-    public ModelAndView payment(String userName, String password,HttpSession session) {
-        ModelAndView mv = new ModelAndView("payment");
-        User user = new User();
-        user.setUserName(userName);
-        user.setPassword(password);
-        session.setAttribute("userName",userName);
-        session.setAttribute("password",password);
+    public ModelAndView payment( @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        if(result.hasErrors()) {
+            mv.setViewName("signup");
+            System.out.println(result.getAllErrors());
+            return mv;
+        }
+        mv.setViewName("payment");
+        session.setAttribute("userName",user.getUserName());
+        session.setAttribute("password",user.getPassword());
         userService.insertUser(user);
+        session.setAttribute("loggedInUser", user.getUserName());
         return mv;
     }
 

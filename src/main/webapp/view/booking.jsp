@@ -34,14 +34,14 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 50px; /* Add gap between seats */
+            gap: 10px; /* Add gap between seats */
         }
         .seat {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px; /* 20% width for 5 columns with gap */
-            height: 60px;
+            width: 30px; /* Adjust size of seats */
+            height: 30px;
             background-color: #eee;
             border-radius: 5px;
             cursor: pointer;
@@ -100,7 +100,7 @@
     <div class="logout-form">
         <%
             String loggedInUser = (String) session.getAttribute("loggedInUser");
-            if (loggedInUser != null && !loggedInUser.isEmpty()) {
+            if (loggedInUser != null ) {
         %>
             <form action="logout">
                 <input type="submit" class="logout-button" value="Logout">
@@ -121,7 +121,7 @@
                         <input type="checkbox" id="${seat.seatNumber}" name="selectedSeats" value="${seat.seatNumber}" ${occupiedSeats.contains(seat.getSeatNumber()) ? 'disabled' : ''}>
                         <label for="${seat.seatNumber}">${seat.seatNumber}</label>
                     </div>
-                    <c:if test="${status.index % 7 == 4}"></div><div class="seats"></c:if> <!-- Close and reopen .seats div every 5 seats -->
+                    <c:if test="${status.index % 18 == 5}"></div><div class="seats"></c:if> <!-- Close and reopen .seats div every 5 seats -->
                 </c:forEach>
             </div>
             <br><br>
