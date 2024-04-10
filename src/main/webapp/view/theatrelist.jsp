@@ -155,7 +155,7 @@
                 <p><%= theatre.getName() %></p>
                 <div class="theatre-details">
                     <p>Seat Capacity: <%= theatre.getSeatCapacity() %></p>
-                    <p>Seats Available: <%= theatre.GetSeatList().size() %></p>
+                    <p>Seats Available: <%= theatre.getUnoccupiedSeatsCount() %></p>
                     <p>Movie Timings:</p>
                     <ul class="movie-timings">
                         <%

@@ -152,22 +152,14 @@ public class MyController {
             session.removeAttribute("loggedInUser");
             session.invalidate();
         }
-        mv.setViewName("redirect:/");
+        mv.setViewName("redirect:/loggedout.html");
         return mv;
     }
-
-    @PostMapping("/otpConfirmation")
-    public ModelAndView otp() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("otpConfirmation");
-        return mv;
-    }
-
     @RequestMapping("/payment")
-    public ModelAndView payment( @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+    public ModelAndView payment(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
         ModelAndView mv = new ModelAndView();
         if(result.hasErrors()) {
-            mv.setViewName("signup");
+            mv.setViewName("redirect:/signup");
             System.out.println(result.getAllErrors());
             return mv;
         }
@@ -175,6 +167,7 @@ public class MyController {
         session.setAttribute("userName",user.getUserName());
         session.setAttribute("password",user.getPassword());
         userService.insertUser(user);
+        session.setAttribute("user", user);
         session.setAttribute("loggedInUser", user.getUserName());
         return mv;
     }

@@ -68,7 +68,15 @@ public class Theatre {
     public void setMovieTimingsMap(Map<String, List<String>> movieTimingsMap) {
         this.movieTimingsMap = movieTimingsMap;
     }
-
+    public int getUnoccupiedSeatsCount() {
+        int count = 0;
+        for (Seat seat : seatList) {
+            if (!seat.isOccupied()) {
+                count++;
+            }
+        }
+        return count;
+    }
     public void setSeatList(List<Seat> seatList) {
         this.seatList = seatList;
     }

@@ -68,6 +68,21 @@
             font-size: 16px;
             color: #333;
         }
+        .payment-form .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-form .form-group button:hover {
+            background-color: #0056b3;
+        }
     </style>
     <script>
         // Disable caching to prevent showing the page when clicking back button
@@ -77,6 +92,12 @@
                 window.history.pushState({}, '', '/');
             };
         };
+        function submitForm() {
+            // Get the form element
+            var form = document.getElementById("payment-form");
+            // Submit the form
+            form.submit();
+        }
     </script>
 </head>
 <body>
@@ -94,9 +115,10 @@
             <p>Number of Seats: <%= session.getAttribute("totalSeats") %></p>
             <p>Total Amount: ₹${totalSeats * 200}</p>
         </div>
-        <form class="otp-form" action="otpConfirmation" method="post">
+        <form class="payment-form" action="processing.html">
             <div class="form-group">
-                <input type="submit" value="Send OTP">
+                <!-- Button to pay the total amount -->
+                <input type="submit" value="Pay ₹${totalSeats * 200}">
             </div>
         </form>
     </div>
