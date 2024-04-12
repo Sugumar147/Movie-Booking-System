@@ -72,14 +72,14 @@
             margin-right: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            padding: 5px;
         }
         .movie-timings li:hover {
-            background-color: green;
             color: #333; /* Change color on hover */
             border-radius: 3px; /* Add border-radius on hover */
             padding: 5px 10px; /* Adjust padding on hover */
         }
-/*           .theatre a {
+/*      .theatre a {
             position: absolute;
             top: 0;
             left: 0;
@@ -118,6 +118,19 @@
             justify-content : flex-end;
             padding : 40px 40px;
         }
+        .modern-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modern-link:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -154,9 +167,6 @@
             <div class="theatre">
                 <p><%= theatre.getName() %></p>
                 <div class="theatre-details">
-                    <p>Seat Capacity: <%= theatre.getSeatCapacity() %></p>
-                    <p>Seats Available: <%= theatre.getUnoccupiedSeatsCount() %></p>
-                    <p>Movie Timings:</p>
                     <ul class="movie-timings">
                         <%
                             List<String> movieTimings = theatre.getMovieTimingsMap().get(selectedMovie);
@@ -164,7 +174,7 @@
                                 for (String timing : movieTimings) {
                                     if(new MovieService().isAvailableNow(timing)) {
                         %>
-                        <li><a href="booking?theatreName=<%= theatre.getName() %>&timing=<%= timing %>"><%= timing %></a></li>
+                        <li><a href="booking?theatreName=<%= theatre.getName() %>&timing=<%= timing %>" class="modern-link"><%= timing %></a></li>
                         <%
                                     }
                                 }

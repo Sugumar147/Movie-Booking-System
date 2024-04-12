@@ -120,15 +120,20 @@
 </head>
 <body>
     <div class="logout-form">
-                <%
-                    String loggedInUser = (String) session.getAttribute("loggedInUser");
-                    if (loggedInUser != null) {
-                %>
-                        <!-- Render logout button -->
-                        <form action="logout">
-                            <input type="submit" class="logout-button" value="Logout">
-                        </form>
-                <% } %>
+        <%
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null) {
+        %>
+                <!-- Render logout button -->
+                <form action="logout">
+                    <input type="submit" class="logout-button" value="Logout">
+                </form>
+        <% } %>
+    </div>
+    <div class="mybookings">
+        <form action="mybookings">
+            <input type="submit" class="mybookings-button" value="My Bookings">
+        </form>
     </div>
     <div class="container">
 

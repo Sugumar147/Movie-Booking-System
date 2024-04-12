@@ -40,7 +40,6 @@ public class TheatreService {
         }
     }
 
-
     public int getSeatsAvailable(Theatre theatre) {
         int count=0;
         List<Seat> seatList = theatre.GetSeatList();
