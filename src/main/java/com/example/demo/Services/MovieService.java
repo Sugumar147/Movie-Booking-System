@@ -21,10 +21,10 @@ public class MovieService {
 
     public List<Movie> getMovies() {
         List<Movie> list = new ArrayList<>();
-        list.add(new Movie(1, "Dune","https://shorturl.at/hAJLR"));
-        list.add(new Movie(2, "The Batman","https://shorturl.at/fJQ25"));
-        list.add(new Movie(3, "Fight Club","https://shorturl.at/vALQW"));
-        list.add(new Movie(4, "Deadpool","https://shorturl.at/BMUW8"));
+        list.add(new Movie(1, "Dune","/images/dune.jpg"));
+        list.add(new Movie(2, "The Batman","/images/batman.jpg"));
+        list.add(new Movie(3, "Fight Club","/images/fight-club.jpg"));
+        list.add(new Movie(4, "Deadpool","/images/deadpool.webp"));
         return list;
     }
 

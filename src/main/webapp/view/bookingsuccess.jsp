@@ -105,6 +105,7 @@
             <p>Booking ID: ${ticket.bookingId}</p>
             <p>Movie: ${ticket.movie}</p>
             <p>Theatre: ${ticket.theatre}</p>
+            <p>Timing: ${ticket.timing}</p>
             <p>Number of Seats: <%= session.getAttribute("totalSeats")%></p>
             <p>Seats: <%= session.getAttribute("selectedSeats")%></p>
             <p>Amount: ${ticket.amount}</p>

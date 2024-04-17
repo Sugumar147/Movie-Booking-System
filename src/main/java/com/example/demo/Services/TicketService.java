@@ -24,6 +24,7 @@ public class TicketService {
         ticket.setTheatre((String) session.getAttribute("selectedTheatre"));
         ticket.setMovie((String) session.getAttribute("movieName"));
         ticket.setSeatList((List<Seat>) session.getAttribute("selectedSeats"));
+        ticket.setTiming((String) session.getAttribute("timing"));
         session.setAttribute("seats",(List<Seat>) session.getAttribute("selectedSeats"));
         ticket.setAmount(((Integer) session.getAttribute("totalSeats"))*200);
         String randomString = generateRandomString();
@@ -36,6 +37,6 @@ public class TicketService {
         // Convert UUID to a string and remove hyphens
         String randomString = uuid.toString().replace("-", "");
         // Return a substring of the first 16 characters
-        return randomString.substring(0, 16);
+        return randomString.substring(0, 8);
     }
 }

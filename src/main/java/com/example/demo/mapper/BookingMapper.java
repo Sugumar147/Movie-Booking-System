@@ -1,20 +1,41 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Booking;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.example.demo.model.Ticket;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.ArrayTypeHandler;
+import org.apache.ibatis.type.TypeHandler;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 public interface BookingMapper {
-    @Insert("INSERT INTO booking (theatre_name, timing, seat_number) " +
-            "VALUES (#{theatreName}, #{timing}, #{seatNumber})")
-    void insertBooking(Booking booking);
+    @Insert("INSERT INTO bookings (username, booking_id, movie, theatre, timing, seatlist, amount) " +
+            "VALUES (#{userName}, #{bookingId}, #{movie}, #{theatre}, #{timing}, #{seatNumbers, jdbcType=ARRAY}," +
+            " #{amount})")
+    void insertBooking(String userName, String bookingId,String movie,String theatre,String timing,
+                       String[] seatNumbers,int amount);
 
-    @Select("SELECT seat_number FROM booking WHERE theatre_name = #{theatreName} AND timing = #{timing}")
-    List<String> getOccupiedSeats(@Param("theatreName") String theatreName, @Param("timing") String timing);
 
+    @Select("SELECT seatlist FROM bookings WHERE theatre = #{theatreName} AND timing = #{timing}")
+    String[] getOccupiedSeatsAsString(@Param("theatreName") String theatreName, @Param("timing") String timing);
+
+    default List<String> getOccupiedSeats(String theatreName, String timing) {
+        String seatListAsString = Arrays.toString(getOccupiedSeatsAsString(theatreName, timing));
+        if (seatListAsString != null) {
+            // Split the string by comma and convert it to a List<String>
+            return Arrays.stream(seatListAsString.split(","))
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+    @Select("SELECT * FROM bookings WHERE username = #{userName}")
+    @Results({
+            @Result(property = "bookingId", column = "booking_id"),
+            @Result(property = "seatlist" ,column = "seatNumbers")
+    })
+    List<Ticket> getAllBookingsByUserName(String userName);
 }

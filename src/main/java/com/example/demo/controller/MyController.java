@@ -1,14 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.Services.*;
+import com.example.demo.mapper.BookingMapper;
 import com.example.demo.mapper.UsersMapper;
 import com.example.demo.model.*;
 import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.apache.ibatis.type.MappedTypes;
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.Book;
 import java.util.List;
 
 @MappedTypes(User.class)
@@ -29,6 +33,9 @@ public class MyController {
     private UserService userService;
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private BookingMapper bookingMapper;
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -56,7 +63,6 @@ public class MyController {
         Theatre theatre = TheatreService.getTheatreByName(selectedTheatre);
         List<String> occupiedSeats = bookingService.getOccupiedSeats(selectedTheatre,timing);
         System.out.println(occupiedSeats);
-//        theatreService.addSeatsForTheatre(theatre);
         List<Seat> seatList = theatre.GetSeatList();
         mv.setViewName("booking");
         mv.addObject("occupiedSeats",occupiedSeats);
@@ -102,9 +108,29 @@ public class MyController {
         Theatre theatre = (Theatre) session.getAttribute("theatre");
         String timing = (String) session.getAttribute("timing");
         List<String> selectedSeats = (List<String>) session.getAttribute("selectedSeats");
-        theatreService.occupySeats(theatre,selectedSeats,timing);
+        theatreService.occupySeats(theatre,selectedSeats,timing,ticket,userName);
         return mv;
     }
+
+    @RequestMapping("/secondarylogin")
+    public ModelAndView secondarylogin(String username,String password,HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        if(username!=null && password!=null && userService.verifyLogin(username,password)) {
+            List<Ticket> tickets = bookingMapper.getAllBookingsByUserName(username);
+            mv.addObject("tickets",tickets);
+            mv.setViewName("mybookings");
+            mv.addObject("userName",username);
+            mv.addObject("password",password);
+            session.setAttribute("userName",username);
+            session.setAttribute("password",password);
+            session.setAttribute("loggedInUser",username);
+        }
+        else {
+            mv.setViewName("login");
+        }
+        return mv;
+    }
+
     @RequestMapping("/confirmbooking")
     public ModelAndView confirmBooking(@Nullable @RequestParam("selectedSeats") List<String> selectedSeats,HttpSession session) {
         ModelAndView mv = new ModelAndView();
@@ -142,6 +168,20 @@ public class MyController {
     @GetMapping("signup")
     public ModelAndView signup() {
         ModelAndView mv = new ModelAndView("signup");
+        return mv;
+    }
+
+    @GetMapping("/mybookings")
+    public ModelAndView myBookings(HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        String userName = (String) session.getAttribute("userName");
+        if(userName==null) {
+            mv.setViewName("login");
+            return mv;
+        }
+        List<Ticket> tickets = bookingMapper.getAllBookingsByUserName(userName);
+        mv.addObject("tickets",tickets);
+        mv.setViewName("mybookings");
         return mv;
     }
 

@@ -95,11 +95,11 @@
         }
 
         .logout-button {
-            position: absolute; /* Added */
-            top: 20px; /* Added */
-            right: 20px; /* Added */
+            position: absolute;
+            top: 20px;
+            right: 20px;
             padding: 10px 20px;
-            background-color: #0056b3; /* Changed color */
+            background-color: #0056b3;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -111,10 +111,24 @@
         .logout-button:hover {
             background-color: #ff0000;
         }
-        .logout-form {
-            display : flex;
-            justify-content : flex-end;
-            padding : 40px 40px;
+
+        /* My Bookings button styles */
+        .mybookings-button {
+            position: absolute;
+            top: 20px;
+            left: 20px; /* Adjusted to be on the opposite direction */
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .mybookings-button:hover {
+            background-color: #ff0000;
         }
     </style>
 </head>

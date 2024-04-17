@@ -9,9 +9,12 @@ public class Ticket {
     private String bookingId;
     private String movie;
     private String theatre;
+    private String timing;
     private List<Seat> seatList;
+    private List<String> seatNumbers;
     private int amount;
 
+    // Getters and setters for all fields
     public String getBookingId() {
         return bookingId;
     }
@@ -36,12 +39,28 @@ public class Ticket {
         this.theatre = theatre;
     }
 
+    public String getTiming() {
+        return timing;
+    }
+
+    public void setTiming(String timing) {
+        this.timing = timing;
+    }
+
     public List<Seat> getSeatList() {
         return seatList;
     }
 
     public void setSeatList(List<Seat> seatList) {
         this.seatList = seatList;
+    }
+
+    public List<String> getSeatNumbers() {
+        return seatNumbers;
+    }
+
+    public void setSeatNumbers(List<String> seatNumbers) {
+        this.seatNumbers = seatNumbers;
     }
 
     public int getAmount() {
@@ -52,3 +71,4 @@ public class Ticket {
         this.amount = amount;
     }
 }
+

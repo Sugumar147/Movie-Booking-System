@@ -95,12 +95,7 @@
         <h1>Booking Confirmation</h1>
 
         <%
-            // Check if user is logged in
             boolean isLoggedIn = false; // Assuming user is not logged in initially
-            // You need to implement logic to check if the user is logged in or not.
-            // For demonstration, I'm assuming isLoggedIn is set to true if user is logged in.
-            // You may need to replace this with your actual logic.
-
             if (isLoggedIn) {
         %>
                 <div class="logged-in-message">

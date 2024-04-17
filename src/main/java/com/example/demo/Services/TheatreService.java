@@ -2,6 +2,7 @@ package com.example.demo.Services;
 
 import com.example.demo.model.Seat;
 import com.example.demo.model.Theatre;
+import com.example.demo.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,16 +51,17 @@ public class TheatreService {
         }
         return count;
     }
-    public void occupySeats(Theatre theatre, List<String> seatNumbers, String timing) {
+    public void occupySeats(Theatre theatre, List<String> seatNumbers, String timing, Ticket ticket, String userName) {
         List<Seat> seatList = theatre.GetSeatList();
+        List<String> seats = new ArrayList<>();
         for (Seat seat : seatList) {
             if (seatNumbers.contains(seat.getSeatNumber())) {
                 seat.setOccupied(true);
-                // Optionally, you may want to save the updated seat information to the database here
-                bookingService.bookSeats(theatre.getName(), timing, seat.getSeatNumber() );
-                System.out.println(theatre.getName()+"  " + timing +" " + seat.getSeatNumber() );
+                seats.add(seat.getSeatNumber());
             }
         }
+        ticket.setSeatNumbers(seats);
+        bookingService.bookSeats(theatre.getName(), timing,ticket ,userName);
     }
 
 }
