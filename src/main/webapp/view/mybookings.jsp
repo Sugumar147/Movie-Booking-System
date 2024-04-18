@@ -44,9 +44,61 @@
         .booking-value {
             color: #333;
         }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #ff0000;
+        }
+
+        /* My Bookings button styles */
+        .mybookings-button {
+            position: absolute;
+            top: 20px;
+            left: 20px; /* Adjusted to be on the opposite direction */
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .mybookings-button:hover {
+            background-color: #ff0000;
+        }
     </style>
 </head>
 <body>
+    <div class="logout-form">
+        <%
+            String loggedInUser = (String) session.getAttribute("loggedInUser");
+            if (loggedInUser != null) {
+        %>
+                <!-- Render logout button -->
+                <form action="logout">
+                    <input type="submit" class="logout-button" value="Logout">
+                </form>
+        <% } %>
+    </div>
+    <div class="mybookings">
+        <form action="/">
+            <input type="submit" class="mybookings-button" value="Home">
+        </form>
+    </div>
     <div class="container"\>
         <h1>My Bookings</h1>
         <c:forEach var="ticket" items="${tickets}">
@@ -69,8 +121,8 @@
                 </div>
                 <div class="booking-details">
                     <span class="booking-label">Seat Number(s):</span>
-                    <c:forEach var="seat" items="${ticket.seatList}">
-                        <span class="booking-value">${seat.seatNumber}</span>
+                    <c:forEach var="seat" items="${ticket.seatNumbers}">
+                        <span class="booking-value">${seat}</span>
                     </c:forEach>
                 </div>
                 <div class="booking-details">

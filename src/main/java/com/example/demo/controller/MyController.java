@@ -198,9 +198,14 @@ public class MyController {
     @RequestMapping("/payment")
     public ModelAndView payment(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        if(result.hasErrors()) {
-            mv.setViewName("redirect:/signup");
-            System.out.println(result.getAllErrors());
+        List<Seat> seatList = (List<Seat>) session.getAttribute("selectedSeats");
+        if(seatList==null) {
+            mv.setViewName("redirect:/mybookings");
+            session.setAttribute("userName",user.getUserName());
+            session.setAttribute("password",user.getPassword());
+            userService.insertUser(user);
+            session.setAttribute("user", user);
+            session.setAttribute("loggedInUser", user.getUserName());
             return mv;
         }
         mv.setViewName("payment");

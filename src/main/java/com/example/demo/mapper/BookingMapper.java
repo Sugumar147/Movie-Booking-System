@@ -1,8 +1,10 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.Ticket;
+import com.example.demo.typehandler.StringListTypeHandler;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.ArrayTypeHandler;
+import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
 import java.util.Arrays;
@@ -35,7 +37,7 @@ public interface BookingMapper {
     @Select("SELECT * FROM bookings WHERE username = #{userName}")
     @Results({
             @Result(property = "bookingId", column = "booking_id"),
-            @Result(property = "seatlist" ,column = "seatNumbers")
+            @Result(property = "seatNumbers" ,column = "seatlist", jdbcType = JdbcType.VARCHAR, typeHandler = StringListTypeHandler.class)
     })
     List<Ticket> getAllBookingsByUserName(String userName);
 }
