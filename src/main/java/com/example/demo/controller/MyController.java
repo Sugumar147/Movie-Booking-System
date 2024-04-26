@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.print.Book;
 import java.util.List;
 
-@MappedTypes(User.class)
-@MapperScan("com.example.demo.mapper")
+//@MappedTypes(User.class)
+//@MapperScan("com.example.demo.mapper")
 @Controller
 public class MyController {
     @Autowired

@@ -1,11 +1,9 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.Ticket;
-import com.example.demo.typehandler.StringListTypeHandler;
+import com.example.demo.handler.StringListTypeHandler;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.type.ArrayTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
