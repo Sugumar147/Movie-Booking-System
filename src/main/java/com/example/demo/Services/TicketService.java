@@ -37,6 +37,6 @@ public class TicketService {
         // Convert UUID to a string and remove hyphens
         String randomString = uuid.toString().replace("-", "");
         // Return a substring of the first 16 characters
-        return randomString.substring(0, 8);
+        return (randomString.substring(0, 8)).toUpperCase();
     }
 }
