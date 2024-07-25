@@ -6,14 +6,19 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class User {
+
     @Size(min = 3,max = 16,message = "Enter minimum 3 characters")
     String username;
+
     @NotBlank(message = "Should not be empty")
     String password;
+
     @Email(message = "Enter valid email address")
     String email;
+
     @NotBlank(message = "Should not be empty")
     String phoneNumber;
+
     @NotBlank(message = "Should not be empty")
     String countryCode;
 

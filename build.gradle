@@ -38,6 +38,14 @@ dependencies {
 // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 
+    // https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis
+    implementation 'org.springframework.session:spring-session-data-redis:3.3.0'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.3.0'
+
+    // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
+    implementation 'io.lettuce:lettuce-core:6.3.0.RELEASE'
 
 
 }

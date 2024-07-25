@@ -67,7 +67,7 @@
 <body>
     <div class="container">
         <div class="logged-out-message">
-            <p>You need to be logged in to confirm your booking.</p>
+            <p>You need to be logged in to continue</p>
             <p>Please enter your credentials:</p>
             <form class="login-form" action="/secondarylogin" method="POST">
                 <input type="text" name="username" placeholder="Username" required><br>

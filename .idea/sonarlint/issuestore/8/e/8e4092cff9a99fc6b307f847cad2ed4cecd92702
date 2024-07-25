@@ -1,0 +1,7 @@
+
+x
+java:S1710""7Remove the 'Results' wrapper from this annotation group(°­óŠùÿÿÿÿJ$cf9ca6ca-f342-47d7-bd58-0801856544a6
+½
+java:S6204"zReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()' and ensure that the list is unmodified.(ª™¨¹8ıê›2J$34e3df32-bda2-442f-9b1f-578ddf6a3422
+z
+java:S1128	"2Remove this unused import 'java.util.Collections'.(¢³ïÓşÿÿÿÿ8˜ë–Á2J$fd3aceda-e58b-4725-80c5-5a423010eaa7

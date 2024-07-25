@@ -1,0 +1,51 @@
+
+ˆ
+java:S2583”"DChange this condition so that it does not always evaluate to "false"(†Ò™û8±Ú½¦2J$7d27cbb6-c7cc-41fe-8a2b-ff7ddc6cfb6b
+
+java:S1192"FDefine a constant instead of duplicating this literal "login" 3 times.(¤Ğ¶˜øÿÿÿÿ8¥·¹¦2J$28f781c2-f1dc-4b8d-a526-a243b2055b71
+•
+java:S1192Z"MDefine a constant instead of duplicating this literal "loggedInUser" 5 times.(ÿËë°ıÿÿÿÿ8¥·¹¦2J$74466763-b8e7-448f-a855-2003dbcfb5aa
+
+java:S11921"KDefine a constant instead of duplicating this literal "redirect:/" 8 times.(ĞéÜô8¥·¹¦2J$57562544-78f0-4890-a500-0f457591c518
+‹
+java:S1192N"HDefine a constant instead of duplicating this literal "theatre" 3 times.(Í›ÇŞ8¥·¹¦2J$f9733529-9194-4fe8-b32a-197d57489543
+‘
+java:S1192]"NDefine a constant instead of duplicating this literal "selectedSeats" 5 times.( ×øÃ8¥·¹¦2J$07799abb-e5ad-48f7-95fb-ae22c88db382
+
+java:S1192X"HDefine a constant instead of duplicating this literal "payment" 3 times.(ş•ıÿÿÿÿ8¥·¹¦2J$07cb15fa-a2a1-4811-ba52-4f05a9512004
+Š
+java:S1192O"GDefine a constant instead of duplicating this literal "timing" 3 times.(‘µù–8¥·¹¦2J$ca3a54bd-ae96-43ba-b0b4-be79934b9531
+’
+java:S11920"JDefine a constant instead of duplicating this literal "userName" 11 times.(†»¼Ÿÿÿÿÿÿ8¥·¹¦2J$b159d283-00c6-4380-9629-23bfcc1b46bb
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$8fe38b6c-4702-4311-bb07-676c913e384b
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$65068c10-4290-4a3d-9db9-2840e5833636
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$a1238f2d-851d-4e2d-b780-a0022770d16e
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$7a4e3317-403f-4bf1-adee-705bf65d126a
+…
+java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$58098b4e-b72e-4197-ac28-2494743e4dcd
+…
+java:S6813$"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$3ecf7a10-f7f2-4ae6-b157-4df93edd14be
+…
+java:S6813'"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$1795cacf-b8c6-42f7-b59b-4e07b4103d14
+…
+java:S6813*"BRemove this field injection and use constructor injection instead.(êæÄŞ8¦·¹¦2J$5d8f9b7f-4eaa-4068-adf1-f9626b8ca9ec
+x
+java:S2209H"5Change this instance-reference to a static reference.(ÕÅÜÛ8ª·¹¦2J$c320df2d-792d-4a04-b018-f0c8b06bec53
+€
+java:S2441N"=Make "Theatre" serializable or don't store it in the session.(Í›ÇŞ8ª·¹¦2J$8ec6186c-5ffd-408c-aa15-d9ccc7631e44
+º
+java:S1130e"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(˜åñö8«·¹¦2J$ba3b1a6a-5811-4dfc-9402-a3a9c1a97fb2
+„
+java:S2441o"<Make "Ticket" serializable or don't store it in the session.(¸ÈáÇûÿÿÿÿ8«·¹¦2J$12df91a3-b7fe-440d-a97d-9595bca95f51
+
+java:S1854‰";Remove this useless assignment to local variable "theatre".(Ó—‰ô8­·¹¦2J$4b98bf2d-2f4f-42dc-ae62-5080d4b74b65
+p
+java:S1481‰",Remove this unused "theatre" local variable.(Ó—‰ô8­·¹¦2J$6172f202-1300-478d-8e22-0b2b0ff3d505
+ƒ
+java:S2441Ô":Make "User" serializable or don't store it in the session.(£™Õàûÿÿÿÿ8±·¹¦2J$ecf02bea-18a4-4399-8261-dce232823555
+ƒ
+java:S2441Ú":Make "User" serializable or don't store it in the session.(£™Õàûÿÿÿÿ8±·¹¦2J$22f07245-e97c-4315-a4e8-f44cfd2cd298
