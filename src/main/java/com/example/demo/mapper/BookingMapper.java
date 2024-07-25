@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Mapper
 public interface BookingMapper {
+
     @Insert("INSERT INTO bookings (username, booking_id, movie, theatre, timing, seatlist, amount) " +
             "VALUES (#{userName}, #{bookingId}, #{movie}, #{theatre}, #{timing}, #{seatNumbers, jdbcType=ARRAY}," +
             " #{amount})")
@@ -23,14 +24,11 @@ public interface BookingMapper {
     String[] getOccupiedSeatsAsString(@Param("theatreName") String theatreName, @Param("timing") String timing);
 
     default List<String> getOccupiedSeats(String theatreName, String timing) {
+
         String seatListAsString = Arrays.toString(getOccupiedSeatsAsString(theatreName, timing));
-        if (seatListAsString != null) {
-            // Split the string by comma and convert it to a List<String>
-            return Arrays.stream(seatListAsString.split(","))
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
+
+        return Arrays.stream(seatListAsString.split(","))
+                .collect(Collectors.toList());
     }
     @Select("SELECT * FROM bookings WHERE username = #{userName}")
     @Results({
